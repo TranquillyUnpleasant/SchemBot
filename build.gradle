@@ -1,48 +1,50 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
-project.ext.mainClassName = "corebot.CoreBot"
+project.ext.mainClassName = "schembot.SchemBot"
 sourceCompatibility = targetCompatibility = 14
-version = '1.0'
 
 sourceSets.main.java.srcDirs = ["src/"]
-allprojects{
-    repositories{
+allprojects {
+    repositories {
         mavenLocal()
         mavenCentral()
-        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven{ url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven{ url 'https://jitpack.io' }
-        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://m2.dv8tion.net/releases' }
     }
 }
 
-ext{
+ext {
     mindustryVersion = 'v123'
 }
 
-task run(dependsOn: classes, type: JavaExec){
-    if(project.hasProperty("token")) systemProperty "token", project.getProperty("token")
+task run(dependsOn: classes, type: JavaExec) {
+    if (project.hasProperty("token")) systemProperty "token", project.getProperty("token")
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }
 
-task dist(type: Jar){
+task dist(type: Jar) {
     from files(sourceSets.main.output.classesDirs)
     from files(sourceSets.main.output.resourcesDir)
-    from {configurations.runtimeClasspath.collect{ it.isDirectory() || !it.name.endsWithAny(".zip", ".jar") ? it : zipTree(it) }}
+    from { configurations.runtimeClasspath.collect { it.isDirectory() || !it.name.endsWithAny(".zip", ".jar") ? it : zipTree(it) } }
 
-    archiveFileName = "CoreBot.jar"
+    archiveFileName = "SchemBot.jar"
 
-    manifest{
-        attributes 'Main-Class': project.mainClassName
+    manifest {
+        attributes(
+                'Main-Class': project.mainClassName
+        )
     }
 }
 
-dependencies{
-    compile 'net.dv8tion:JDA:4.2.0_227'
+dependencies {
     compile "org.jsoup:jsoup:1.7.2"
     compile "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compile "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    compile('net.dv8tion:JDA:4.2.1_253') {exclude module: 'opus-java'}
+    implementation group: 'org.json', name: 'json', version: '20190722'
 }
