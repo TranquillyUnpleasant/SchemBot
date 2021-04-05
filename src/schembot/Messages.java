@@ -37,7 +37,7 @@ public class Messages extends ListenerAdapter {
             guild = jda.getGuildById(guildID);
             testGuild = jda.getGuildById(testGuildID);
 
-            Log.info("Discord bot up.");
+            Log.info("Logged in as @!", jda.getSelfUser().getAsTag());
             Core.net = new arc.Net();
         } catch (Exception e) {
             throw new RuntimeException(e);

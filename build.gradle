@@ -46,5 +46,7 @@ dependencies {
     compile "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compile "com.github.Anuken.Mindustry:core:$mindustryVersion"
     compile('net.dv8tion:JDA:4.2.1_253') {exclude module: 'opus-java'}
+
+    implementation "ch.qos.logback:logback-classic:1.2.3"
     implementation group: 'org.json', name: 'json', version: '20190722'
 }
