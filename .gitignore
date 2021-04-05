@@ -4,9 +4,11 @@
 /.settings/
 /.gradle/
 /build/
-.classpath
-.project
 /.idea/
 /out/
+/test/
+.classpath
+.project
 CoreBot.iml
 prefs.properties
+*.sh
